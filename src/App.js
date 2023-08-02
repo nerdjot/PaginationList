@@ -77,6 +77,20 @@ function PaginationTable() {
   let totalPages = Math.floor(data.length / recordsPerPage) + 1;
   let lowerSlice = ((pageNumber - 1) * recordsPerPage);
   let upperSlice = pageNumber * recordsPerPage;
+  function decrementPage()
+  {
+    if(pageNumber > 1)
+    {
+      setPageNumber(pageNumber - 1)
+    }
+  }
+  function incrementPage()
+  {
+    if(pageNumber < totalPages)
+    {
+      setPageNumber(pageNumber + 1)
+    }
+  }
   return (
     <div>
       <table className='table table-hover'>
@@ -92,9 +106,9 @@ function PaginationTable() {
         {data.slice(lowerSlice, upperSlice).map(candidate => <TableRow candidate={candidate}></TableRow>)}
       </table>
       <div>
-        <button onClick={() => {setPageNumber(pageNumber - 1)}}>Previous</button>
+        <button disabled={pageNumber <= 1} onClick={() => {decrementPage()}}>Previous</button>
         {"Page "+pageNumber+" of "+totalPages}
-        <button onClick={() => {setPageNumber(pageNumber + 1)}}>Next</button>
+        <button disabled={pageNumber >= totalPages} onClick={() => {incrementPage()}}>Next</button>
       </div>
     </div>
   );
